@@ -1,3 +1,3 @@
 # Backup-Python
- Console application
+Console application\
 Консольное приложение для создания резервных копий в формате zip.
