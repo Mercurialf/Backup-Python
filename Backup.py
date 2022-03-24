@@ -7,13 +7,11 @@ import shutil
 __version__ = '0.04'
 
 
-# Используем функцию которая содержит путь к каталогу по умолчанию, но даём возможность выбрать путь пользователю.
 def Path():
     default_path = 'E:\\Document'
     user_choice = input('Указать путь к каталогу, '
                         'или использовать по умолчанию ({0})? Y or N\n'.format(default_path))
 
-    # Используем цикл для проверки ввода пользователя
     while True:
         if user_choice == 'Y':
             user_path = input('Введите путь к каталогу который нужно архивировать.\n')
@@ -23,7 +21,6 @@ def Path():
             return default_path
 
 
-# Функция которая получает путь в котором должен оказаться архив, либо используем по умолчанию.
 def target_Path():
     default_path = 'E:\\Backup'
     user_choice = input('Указать путь сохранения архива, '
@@ -39,7 +36,6 @@ def target_Path():
 
 
 print('BackUp ver.{0}'.format(__version__))
-# Получаем адрес каталога с помощью функции, далее переходим в него.
 path = Path()
 os.chdir(path)
 
@@ -51,13 +47,11 @@ s = """
 today = target_Path() + os.sep + time.strftime('%Y%m%d')
 
 
-# Создаем каталог в котором будет архив, если его ещё нет.
 if not os.path.exists(today):
-    os.mkdir(today)  # Создание каталога
+    os.mkdir(today)
     print('Каталог {0} успешно создан.'.format(today))
 
 
-# Функция которая позволяет добавлять комментарий к архиву
 def User_Comment():
     user_comment = input('Введите комментарий --> ')
     time_now = time.strftime('%H%M%S')
@@ -76,11 +70,9 @@ def User_Comment():
 now = User_Comment()
 zip_file = zipfile.ZipFile(now, 'w')
 
-# Рекурсивный перебор в указаном каталоге 'path'
 for root, dirs, files in os.walk(path):
     for file in files:
         zip_file.write(os.path.join(root, file))
 
-# Закрываем архив и перемещаем архив
 zip_file.close()
 shutil.move(now, today)
